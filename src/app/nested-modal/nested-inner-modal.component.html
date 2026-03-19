@@ -1,0 +1,41 @@
+<div class="modal-header-bar d-flex align-items-center justify-content-between px-4 pt-4 pb-3">
+  <div>
+    <span class="badge rounded-pill bg-success-subtle text-success-emphasis mb-1">Inner Modal</span>
+    <h5 class="modal-title fw-bold mb-0 fs-5">{{ data.title }}</h5>
+  </div>
+  <button type="button" class="btn-close btn-close-sm" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="px-4 py-3">
+  <p class="text-secondary mb-3" style="line-height: 1.6">{{ data.description }}</p>
+
+  @if (data.fromOuterParent) {
+    <div class="from-parent-banner mb-4">
+      <span class="from-parent-label"><i class="bi bi-arrow-down-left-square me-1"></i>Received from outer modal</span>
+      <span class="from-parent-value">{{ data.fromOuterParent }}</span>
+    </div>
+  }
+
+  <div class="mb-4">
+    <label for="inner-input" class="form-label fw-semibold text-dark small text-uppercase">
+      Inner reply <span class="text-muted fw-normal">(returned to outer modal)</span>
+    </label>
+    <input
+      id="inner-input"
+      type="text"
+      class="form-control"
+      placeholder="Type something to send back to the outer modal…"
+      [(ngModel)]="innerText"
+      (keyup.enter)="close()"
+    />
+  </div>
+</div>
+
+<div
+  class="d-flex justify-content-end gap-2 px-4 py-3 border-top bg-body-tertiary"
+  style="border-radius: 0 0 14px 14px"
+>
+  <button type="button" class="btn btn-success px-4" (click)="close()">
+    <i class="bi bi-check-lg me-2"></i>Close inner &amp; send
+  </button>
+</div>

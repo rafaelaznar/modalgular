@@ -1,7 +1,92 @@
-<div class="container mt-4 border border-primary p-5 rounded">
-  <div class="row bg-danger p-4 rounded">
-    <div class="col">
-      <h1 class="text-center">{{ title() }}</h1>
-    </div>    
-  </div>
+<div class="app-shell">
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon"><i class="bi bi-layers-fill"></i></span>
+        <span class="brand-name">{{ title }}</span>
+      </div>
+      <p class="brand-tagline">Dynamic modal system &middot; Angular + Bootstrap</p>
+    </div>
+  </header>
+
+  <main class="app-main">
+
+    <!-- Parent input: value is passed down to any modal opened below -->
+    <div class="parent-input-section">
+      <div class="parent-input-label">
+        <i class="bi bi-house-fill"></i>
+        App component (parent)
+      </div>
+      <p class="parent-input-desc">
+        Type a message below. It will be passed as typed data (<code>fromParent</code>) into whichever modal you open.
+      </p>
+      <div class="parent-input-field">
+        <label for="app-input" class="visually-hidden">Message from App</label>
+        <input
+          id="app-input"
+          type="text"
+          class="form-control form-control-lg"
+          placeholder="Message from the App to pass to the modal children…"
+          [(ngModel)]="appInput"
+        />
+      </div>
+    </div>
+
+    <div class="demo-grid">
+
+      <!-- Card 1: Basic modal -->
+      <div class="demo-card">
+        <div class="demo-card-label">
+          <i class="bi bi-1-circle-fill"></i>
+          Basic Modal
+        </div>
+        <h2 class="demo-card-title">Parent &rarr; child &rarr; parent</h2>
+        <p class="demo-card-desc">
+          The App passes typed data (including the input above) to the modal. The modal returns
+          a value through the typed <code>ModalRef</code> close result.
+        </p>
+
+        <button class="demo-btn demo-btn--primary" (click)="openDemoModal()">
+          <i class="bi bi-box-arrow-in-up-right me-2"></i>
+          Open demo modal
+        </button>
+
+        @if (demoResult() !== null) {
+          <div class="result-box result-box--blue">
+            <span class="result-label"><i class="bi bi-arrow-return-right me-1"></i>Received from modal</span>
+            <span class="result-value">{{ demoResult() }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Card 2: Nested modals -->
+      <div class="demo-card">
+        <div class="demo-card-label demo-card-label--amber">
+          <i class="bi bi-2-circle-fill"></i>
+          Nested Modals
+        </div>
+        <h2 class="demo-card-title">Independent contexts</h2>
+        <p class="demo-card-desc">
+          The outer modal can open an inner modal. Each holds its own <code>ModalRef</code>
+          and data &mdash; contexts never bleed into each other.
+        </p>
+
+        <button class="demo-btn demo-btn--amber" (click)="openNestedModal()">
+          <i class="bi bi-layers me-2"></i>
+          Open nested modal
+        </button>
+
+        @if (nestedResult() !== null) {
+          <div class="result-box result-box--amber">
+            <span class="result-label"><i class="bi bi-arrow-return-right me-1"></i>Received from outer modal</span>
+            <span class="result-value">{{ nestedResult()!.outerText || '(empty)' }}</span>
+            <span class="result-label mt-2"><i class="bi bi-arrow-return-right me-1"></i>Received from inner modal (via outer)</span>
+            <span class="result-value">{{ nestedResult()!.innerText || '(empty)' }}</span>
+          </div>
+        }
+      </div>
+
+    </div>
+  </main>
 </div>
+

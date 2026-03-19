@@ -1,0 +1,69 @@
+<div class="modal-header-bar d-flex align-items-center justify-content-between px-4 pt-4 pb-3">
+  <div>
+    <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis mb-1">Outer Modal</span>
+    <h5 class="modal-title fw-bold mb-0 fs-5">{{ data.title }}</h5>
+  </div>
+  <button type="button" class="btn-close btn-close-sm" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="px-4 py-3">
+  <p class="text-secondary mb-3" style="line-height: 1.6">{{ data.description }}</p>
+
+  @if (data.fromParent) {
+    <div class="from-parent-banner mb-4">
+      <span class="from-parent-label"><i class="bi bi-arrow-down-left-square me-1"></i>Received from parent (App)</span>
+      <span class="from-parent-value">{{ data.fromParent }}</span>
+    </div>
+  }
+
+  <div class="mb-3">
+    <label for="outer-input" class="form-label fw-semibold text-dark small text-uppercase">
+      Outer reply <span class="text-muted fw-normal">(returned to App)</span>
+    </label>
+    <input
+      id="outer-input"
+      type="text"
+      class="form-control"
+      placeholder="Type something to send back to the App…"
+      [(ngModel)]="outerText"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="inner-pass-input" class="form-label fw-semibold text-dark small text-uppercase">
+      Message for inner modal <span class="text-muted fw-normal">(passed down)</span>
+    </label>
+    <input
+      id="inner-pass-input"
+      type="text"
+      class="form-control"
+      placeholder="Type something to pass to the inner modal…"
+      [(ngModel)]="messageForInner"
+    />
+  </div>
+
+  <div class="d-grid mb-3">
+    <button type="button" class="btn btn-outline-primary" (click)="openInnerModal()">
+      <i class="bi bi-layers me-2"></i>Open inner modal
+    </button>
+  </div>
+
+  @if (innerResultText()) {
+    <div class="alert alert-success d-flex align-items-start gap-2 py-2 px-3 mb-0" role="alert">
+      <i class="bi bi-arrow-return-left mt-1 flex-shrink-0"></i>
+      <div>
+        <strong>Reply from inner modal:</strong>
+        <div class="font-monospace mt-1">{{ innerResultText() }}</div>
+      </div>
+    </div>
+  }
+</div>
+
+<div
+  class="d-flex justify-content-end gap-2 px-4 py-3 border-top bg-body-tertiary"
+  style="border-radius: 0 0 14px 14px"
+>
+  <button type="button" class="btn btn-warning px-4" (click)="close()">
+    <i class="bi bi-send me-2"></i>Close outer &amp; send
+  </button>
+</div>
